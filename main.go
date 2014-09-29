@@ -90,10 +90,10 @@ func main() {
     }
     writer := bufio.NewWriter(wfp)
     for i := 0; i < len(result_list); i++ {
-        writer.WriteString(result_list[i].min_w + "\t " +
-                      result_list[i].max_w + "\t " +
-                      result_list[i].min_h + "\t " +
-                      result_list[i].max_h + "\t " +
+        writer.WriteString(result_list[i].min_w + "\t" +
+                      result_list[i].max_w + "\t" +
+                      result_list[i].min_h + "\t" +
+                      result_list[i].max_h + "\t" +
                       result_list[i].value + "\n")
     }
     writer.Flush()
