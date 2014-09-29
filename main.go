@@ -22,14 +22,20 @@ const OUTPUT_FILE = "dst.txt"
 const START_POSITION = 2
 
 func main() {
+    defer func() {
+        err := recover()
+        if err != nil {
+          fmt.Println (err)
+        }
+    }()
+
     var rfp, wfp *os.File
     var err error
 
     // ファイルオープン
     rfp, err = os.Open(INPUT_FILE)
     if err != nil {
-        fmt.Println("file open error")
-        return
+        panic("file open error")
     }
     defer rfp.Close()
 
@@ -42,8 +48,7 @@ func main() {
        if err == io.EOF {
            break
        } else if err != nil {
-           fmt.Println("file read error")
-           return
+           panic("file read error")
        }
        read_data = append(read_data, record)
     }
@@ -79,14 +84,12 @@ func main() {
     // ファイル出力
     wfp, err = os.OpenFile(OUTPUT_FILE, os.O_WRONLY | os.O_CREATE, 0600)
     if err != nil {
-        fmt.Println("file open error")
-        return
+        panic("file open error")
     }
     defer wfp.Close()
     err = wfp.Truncate(0)
     if err != nil {
-        fmt.Println("file truncate error")
-        return
+        panic("file truncate error")
     }
     writer := bufio.NewWriter(wfp)
     for i := 0; i < len(result_list); i++ {
